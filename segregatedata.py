@@ -3,11 +3,11 @@ from datetime import datetime
 import pandas as pd
 
 df = pd.read_csv('dataset/covid_19_india.csv')
-print(df)
-df['Confirmed']-=df['Cured']
+#print(df)
+#df['Confirmed']-=df['Cured']
 for i in range(0,len(df['Date'])):
     df['Date'][i]=datetime.strptime(df['Date'][i],'%d/%m/%y')
-print(df)
+#print(df)
 states = []
 for i in df['State/UnionTerritory']:
     if i not in states:
@@ -15,7 +15,7 @@ for i in df['State/UnionTerritory']:
 for i in states:
     stateCsv=df.loc[df['State/UnionTerritory']==i]
     stateCsv=stateCsv.drop(['Sno', 'Time', 'State/UnionTerritory','ConfirmedIndianNational', 'ConfirmedForeignNational'], axis=1)
-    print(stateCsv.head())
+    #print(stateCsv.head())
     stateCsv.to_csv('Statewise/'+i+'.csv',index=False)
 
 
