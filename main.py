@@ -3,8 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
 import fbprophet
+from fbprophet.diagnostics import cross_validation
 from WindowSlider import WindowSlider
-    
+
+def MaP(y,yh):
+    y,yh=np.array(y),np.array(yh)
+    return np.mean(np.abs((y-yh)/y)) *100    
 
 df = pd.read_csv('dataset/covid_19_india.csv')
 #print(df)
@@ -37,9 +41,12 @@ for j in states:
 
     df_prophet.fit(df2)
     # Python
-    future = df_prophet.make_future_dataframe(periods=30,freq='D')
+    future = df_prophet.make_future_dataframe(periods=10,freq='D')
     forecast = df_prophet.predict(future)
     df_prophet.plot(forecast)
+    cv=cross_validation(df_prophet,initial=str(len(df2)-5)+' days',horizon='2 days' )
+    mAp=MaP(cv.y,cv.yhat)
+    print(mAp)
     #df_prophet.plot_components(forecast)
     #df_prophet.plot_components(forecast)
     plt.show()
