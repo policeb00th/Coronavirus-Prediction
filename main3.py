@@ -18,11 +18,11 @@ holidays = pd.DataFrame({
     'lower_window': 0,
     'upper_window': 1,
 })
-df = pd.read_csv('datewise.csv')
+df = pd.read_csv('CasesPerDay.csv')
 df = df.rename(columns={'Date': 'ds', 'Confirmed': 'y'})
 print(df.head())
 
-df_prophet = fbprophet.Prophet(changepoint_prior_scale=0.6, holidays=holidays, holidays_prior_scale=40, seasonality_mode='multiplicative', seasonality_prior_scale=10, daily_seasonality=False, yearly_seasonality=False, weekly_seasonality=False).add_seasonality(
+df_prophet = fbprophet.Prophet(changepoint_prior_scale=0.15, holidays=holidays, holidays_prior_scale=40, seasonality_mode='multiplicative', seasonality_prior_scale=10, daily_seasonality=False, yearly_seasonality=False, weekly_seasonality=False).add_seasonality(
     name='daily',
     period=1,
     fourier_order=15
